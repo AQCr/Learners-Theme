@@ -1,0 +1,22 @@
+[
+    {
+        "name":"theme_settings",
+        "theme_name":"Learners Theme",
+        "theme_version":"1.0.0",
+        "theme_author":"AbdulQadeer",
+        "theme_documentation_url":"http://help.shopify.com/help/online-store/themes",
+        "theme_support_url":"http://support.shopify.com"
+    },
+    {
+        "name":"store_settigns",
+            "settings":
+            [
+                {
+                "type": "image_picker",
+                "label": "Logo Image",
+                "id": "logo_image"
+                }
+            ]
+    }
+    
+]
