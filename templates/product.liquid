@@ -1,0 +1,204 @@
+<section class="custom-product-page">
+  <div class="product-container">
+
+    <!-- LEFT SIDE: PRODUCT IMAGES -->
+    <div class="product-gallery">
+      <div class="main-image">
+        <img id="mainImage" src="{{ product.featured_image | img_url: '800x' }}" alt="{{ product.title }}">
+      </div>
+
+      <div class="thumbnail-row">
+        {% for image in product.images %}
+          <img class="thumbnail" 
+               src="{{ image | img_url: '150x150' }}" 
+               alt="{{ image.alt | escape }}" 
+               onclick="document.getElementById('mainImage').src=this.src">
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- RIGHT SIDE: PRODUCT INFO -->
+    <div class="product-info">
+      <h1 class="product-title">{{ product.title }}</h1>
+      <p class="product-price">{{ product.price | money }}</p>
+
+      <div class="product-description">
+        {{ product.description }}
+      </div>
+
+      {% if product.variants.size > 1 %}
+      <div class="variant-select">
+        <label for="ProductSelect">Choose an option:</label>
+        <select id="ProductSelect" name="id">
+          {% for variant in product.variants %}
+            <option value="{{ variant.id }}">{{ variant.title }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      {% endif %}
+
+      <form method="post" action="/cart/add">
+        <input type="hidden" name="id" value="{{ product.variants.first.id }}">
+        <button type="submit" class="add-to-cart">🛒 Add to Cart</button>
+      </form>
+
+      <button class="buy-now" onclick="window.location.href='/checkout'">⚡ Buy It Now</button>
+    </div>
+  </div>
+</section>
+<style>
+.custom-product-page {
+  padding: 60px 20px;
+  font-family: 'Poppins', sans-serif;
+  background: #fafafa;
+}
+
+.product-container {
+  display: flex;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 0 auto;
+  flex-wrap: wrap;
+}
+
+/* LEFT SIDE */
+.product-gallery {
+  flex: 1;
+  min-width: 300px;
+}
+
+.main-image {
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+  margin-bottom: 15px;
+}
+
+.main-image img {
+  width: 100%;
+  display: block;
+  transition: transform 0.4s ease;
+}
+
+.main-image img:hover {
+  transform: scale(1.05);
+}
+
+.thumbnail-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.thumbnail {
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: 0.3s;
+}
+
+.thumbnail:hover {
+  border-color: #0c7b93;
+}
+
+/* RIGHT SIDE */
+.product-info {
+  flex: 1;
+  min-width: 300px;
+  background: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+}
+
+.product-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: #222;
+}
+
+.product-price {
+  font-size: 1.4rem;
+  color: #0c7b93;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.product-description {
+  color: #555;
+  font-size: 1rem;
+  margin-bottom: 25px;
+  line-height: 1.6;
+}
+
+.variant-select label {
+  display: block;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.variant-select select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  margin-bottom: 25px;
+}
+
+.add-to-cart {
+  width: 100%;
+  background: #0c7b93;
+  color: white;
+  border: none;
+  padding: 14px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+.add-to-cart:hover {
+  background: #095e70;
+}
+
+.buy-now {
+  width: 100%;
+  margin-top: 15px;
+  background: #222;
+  color: white;
+  border: none;
+  padding: 14px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  font-weight: 600;
+}
+
+.buy-now:hover {
+  background: #000;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .product-container {
+    flex-direction: column;
+  }
+
+  .product-gallery, .product-info {
+    width: 100%;
+  }
+
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+  }
+}
+</style>

@@ -1,0 +1,43 @@
+{% comment %}
+All Products Page Template
+Lists all store products without using a collection
+{% endcomment %}
+
+<div class="all-products container">
+  <h1>All Products</h1>
+
+  <div class="product-grid">
+    {% paginate collections.all.products by 12 %}
+      {% for product in collections.all.products %}
+        <div class="product-card">
+          <a href="{{ product.url }}">
+            <img
+              src="{{ product.featured_image | image_url: width: 400 }}"
+              alt="{{ product.title | escape }}"
+              width="400"
+              height="400"
+            >
+            <h2>{{ product.title }}</h2>
+            <p>{{ product.price | money }}</p>
+          </a>
+        </div>
+      {% endfor %}
+    {% endpaginate %}
+  </div>
+</div>
+
+<style>
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+}
+.product-card {
+  text-align: center;
+}
+.product-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+</style>
